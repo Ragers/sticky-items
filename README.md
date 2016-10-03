@@ -24,6 +24,7 @@ Jquery plugin to make an html element sticky from a point on the page when scrol
  
  `$(document).ready(function(){/*sticky code here*/});`
  
+ 
  # API
  **originalWidth:** this is the original width you want the item to fall to (it will not get bigger than this). Size in px or integer value, default: itemWidth
  
