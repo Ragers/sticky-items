@@ -6,6 +6,8 @@ Jquery plugin to make an html element sticky from a point on the page when scrol
  You can send an email to **emoceb3@gmail.com** with _subject_ **sticky-help** if you need any help or if you got any suggestions or bug reports.
  
 # API
+ **top:** default -> 0, how far from the top do you want the element (string in px or %)
+
  **originalWidth:** this is the original width you want the item to fall to (it will not get bigger than this). Size in px or integer value, default: itemWidth
  
  **background:** default -> transparent unless you specify a hashed color code eg. #ffffff for white

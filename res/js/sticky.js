@@ -11,6 +11,7 @@
             @implement method:
              $(document).ready(function(){
                  $('.sticky-element').stickyItem({
+                     top: 0,
                      originalWidth:1280, // sticky item max-width setting, is responsive by default up to max-width
                      background: '#faf7f7', // sticky element background, transparent default
                      layer: 1000 // z-index layer
@@ -18,6 +19,7 @@
              });
          */
         var settings = $.extend({
+            top: 0,
             background: 'transparent',
             originalWidth: 0,
             layer: 99
@@ -62,7 +64,7 @@
                     'width':'100%',
                     'position': 'fixed',
                     'left': 0,
-                    'top': 0,
+                    'top': settings.top,
                     'z-index': settings.layer
                 }).addClass('is-sticky');
                 item.children().css({
