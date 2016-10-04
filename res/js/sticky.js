@@ -57,7 +57,8 @@
         }
 
         function loadScroll() {
-            if (itemTop < curTop) {
+            var tp = parseInt(settings.top);
+            if ((itemTop-tp) < curTop) {
                 item.css({
                     'background': settings.background,
                     'max-width': '100%',
