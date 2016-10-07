@@ -3,6 +3,9 @@ jQuery plugin to make an html element sticky from a point on the page when scrol
 
 ![Home Image](https://raw.githubusercontent.com/Ragers/sticky-items/master/res/img/sticky-items.jpg)
 
+# Links
+> * [ DEMO ](https://ragers.github.io/sticky-items/)
+
 # Help
  
  You can send an email to **emoceb3@gmail.com** with _subject_ **sticky-help** if you need any help or if you got any suggestions or bug reports.
