@@ -33,7 +33,7 @@
         }
         var windowWidth = $(window).outerWidth(); // the current window width
         var curTop = $(window).scrollTop(); // the current scroll position of the page
-
+        item.wrap('<div></div>');
         loadScroll();
         $(window).scroll(function () {
             curTop = $(window).scrollTop(); // update the current scroll position of the page
@@ -72,7 +72,9 @@
                     'width': itemWidth,
                     'margin': 'auto'
                 });
+                item.parent().css({'height':item.outerHeight()});
             } else {
+                item.parent().removeAttr('style');
                 item.removeAttr('style').removeClass('is-sticky');
                 item.children().removeAttr('style');
             }
