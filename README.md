@@ -26,16 +26,21 @@ This is a jQuery plugin to make an html element sticky from a point on the page 
 # How to use sticky-items
 >**Basic Init:**
 
-`$('#sticky-item').stickyItem({
-    background: '#ffffff', originalWidth: 200,layer:100
- });`
+```
+$('#sticky-item').stickyItem({
+    top: '10px',
+    background: '#ffffff', 
+    originalWidth: 200,
+    layer:100
+ });
+ ```
  
  >**Default HTML Markup:**
- 
- &lt;div id="sticky-item"&gt;&lt;div&gt;
- &lt;!-- YOUR HTML STUFF TO STICKY HERE --&gt;
- &lt;/div&gt;&lt;/div&gt;
- 
+ ```
+ <div id="sticky-item">
+    <!-- YOUR HTML STUFF TO STICKY HERE -->
+ </div>
+ ```
  >**Best Practice:**
  
  Remember to wrap your call in a **DOM Ready** event.
@@ -44,4 +49,14 @@ This is a jQuery plugin to make an html element sticky from a point on the page 
  
  **THIS:**
  
- `$(document).ready(function(){/*sticky code here*/});`
+ ```
+ $(document).ready(function(){
+    /*sticky code here*/
+    $('#sticky-item').stickyItem({
+        top: '10px',
+        background: '#ffffff', 
+        originalWidth: 200,
+        layer:100
+     });
+});
+```
