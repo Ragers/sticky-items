@@ -1,6 +1,8 @@
 # Sticky-items
 Jquery plugin to make an html element sticky from a point on the page when scrolling down.
 
+![Home Image](https://github.com/Ragers/sticky-items/blob/master/res/img/sticky-items.jpg)
+
 # Help
  
  You can send an email to **emoceb3@gmail.com** with _subject_ **sticky-help** if you need any help or if you got any suggestions or bug reports.
