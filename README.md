@@ -36,11 +36,13 @@ $('#sticky-item').stickyItem({
  ```
  
  >**Default HTML Markup:**
+ 
  ```
  <div id="sticky-item">
     <!-- YOUR HTML STUFF TO STICKY HERE -->
  </div>
  ```
+ 
  >**Best Practice:**
  
  Remember to wrap your call in a **DOM Ready** event.
