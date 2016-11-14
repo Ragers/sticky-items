@@ -32,7 +32,10 @@ $('#sticky-item').stickyItem({
     left: 'autoload',
     background: '#ffffff', 
     originalWidth: 200,
-    layer:100
+    layer:100,
+    parentStyles: {}, // extend styles for the parent element
+    itemStyles: {}, // extend styles for the item element
+    childrenStyles: {} // extend styles for the children element(s)
  });
  ```
  
@@ -60,7 +63,10 @@ $('#sticky-item').stickyItem({
         left: 'autoload',
         background: '#ffffff', 
         originalWidth: 200,
-        layer:100
+        layer:100,
+        parentStyles: {}, // extend styles for the parent element
+        itemStyles: {}, // extend styles for the item element
+        childrenStyles: {} // extend styles for the children element(s)
      });
 });
 ```
