@@ -29,6 +29,7 @@ This is a jQuery plugin to make an html element sticky from a point on the page 
 ```
 $('#sticky-item').stickyItem({
     top: '10px',
+    left: 'autoload',
     background: '#ffffff', 
     originalWidth: 200,
     layer:100
@@ -56,6 +57,7 @@ $('#sticky-item').stickyItem({
     /*sticky code here*/
     $('#sticky-item').stickyItem({
         top: '10px',
+        left: 'autoload',
         background: '#ffffff', 
         originalWidth: 200,
         layer:100
