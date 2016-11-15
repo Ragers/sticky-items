@@ -31,7 +31,8 @@ $('#sticky-item').stickyItem({
     top: '10px',
     left: 'autoload',
     background: '#ffffff', 
-    originalWidth: 200,
+    stopAt: false, // default: false -> hide the element when it reaches this position.
+    originalWidth: 'autoload',
     layer:100,
     parentStyles: {}, // extend styles for the parent element
     itemStyles: {}, // extend styles for the item element
@@ -62,7 +63,8 @@ $('#sticky-item').stickyItem({
         top: '10px',
         left: 'autoload',
         background: '#ffffff', 
-        originalWidth: 200,
+        stopAt: false, // default: false -> hide the element when it reaches this position.
+        originalWidth: 'autoload',
         layer:100,
         parentStyles: {}, // extend styles for the parent element
         itemStyles: {}, // extend styles for the item element
