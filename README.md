@@ -15,14 +15,27 @@ This is a jQuery plugin to make an html element sticky from a point on the page 
  You can send an email to **emoceb3@gmail.com** with _subject_ **sticky-help** if you need any help or if you got any suggestions or bug reports.
  
 ## API
- >**top:** default -> 0, how far from the top do you want the element (string in px or %)
+ >**top:** default -> 0, how far from the top do you want the element (string in px or % OR you can specify an class or id of an element to autocalculate the top from that element)
 
- >**originalWidth:** this is the original width you want the item to fall to (it will not get bigger than this). Size in px or integer value, default: itemWidth
+ >**left:** default -> autoload, this is the left sticky position of the item (integer values only)
+ 
+ >**originalWidth:** default -> autoload, this is the original width you want the item to fall to (it will not get bigger than this). default: itemWidth (integer values only)
  
  >**background:** default -> transparent unless you specify a hashed color code eg. #ffffff for white
  
  >**layer:** default -> 99, the z-index for this layer when it becomes sticky
  
+ >**stopAt:** default -> false, set a value for the scroller to stop scrolling at. (integer values only)
+ 
+ >**parentStyles:** default -> empty object. specify css styles to apply to the parent object at the time the item becomes sticky.
+ 
+ >**itemStyles:** default empty object. specify  css styles to apply to the item when it becomes sticky
+ 
+ >**childrenStyles:** default -> empty object. specify css styles to apply to the item children when the item becomes sticky
+ 
+ >**responsive:** default -> true, set this to false if you want to disable the default responsive functionality
+ 
+ >**debug:** default -> false, set to true if you want to see a log of information in the browser console
 # How to use sticky-items
 >**Basic Init:**
 

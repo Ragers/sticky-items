@@ -20,6 +20,7 @@
                  parentStyles: {}, // extend styles for the parent element
                  itemStyles: {}, // extend styles for the item element
                  childrenStyles: {}, // extend styles for the children element(s)
+                 responsive: true, // enabled by default, set to false to disable responsive calculation
                  debug: false
              });
          });
@@ -38,9 +39,13 @@
             parentStyles: {},
             itemStyles: {},
             childrenStyles: {},
+            responsive: true,
             debug: false
         }, options );
-
+        var initialTop = settings.top;
+        if(typeof initialTop == 'string'){
+            settings.top = $(initialTop).height();
+        }
         var sticky = false;
         var visible = true;
         var item = this; // save the loaded item into a variable for later use in functions
@@ -62,11 +67,33 @@
 
         $(window).resize(function () {
             windowWidth = $(window).outerWidth(); // update the window width
+            recalculatePosition();
             checkSizes();
             checkLeft();
             checkTop();
             loadScroll();
         });
+
+        function recalculatePosition(){
+            if(!settings.responsive){return false;}
+            if(typeof initialTop == 'string'){
+                settings.top = $(initialTop).height();
+            }
+            curTop = $(window).scrollTop();
+
+            settings.left = 'autoload';
+            settings.originalWidth = 'autoload';
+
+            sticky = false;
+            item.parent().removeAttr('style');
+            item.removeAttr('style').removeClass('is-sticky');
+            item.children().removeAttr('style');
+
+            itemTop = item.offset().top;
+            itemWidth = item.outerWidth();
+            windowWidth = $(window).outerWidth();
+            loadScroll();
+        }
 
         function checkTop(){
             if(!sticky) {
