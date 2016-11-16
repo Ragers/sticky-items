@@ -44,7 +44,7 @@
         }, options );
         var initialTop = settings.top;
         if(typeof initialTop == 'string'){
-            settings.top = $(initialTop).height();
+            settings.top = $(initialTop).outerHeight();
         }
         var sticky = false;
         var visible = true;
