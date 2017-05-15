@@ -10,19 +10,19 @@
 
          @implement method:
          $(document).ready(function(){
-             $('.sticky-element').stickyItem({
-                 top: 0,
-                 left: 'autoload',
-                 originalWidth:'autoload', // sticky item max-width setting, is responsive by default up to max-width
-                 background: '#faf7f7', // sticky element background, transparent default
-                 stopAt: false, // hide the element when it reaches this position.
-                 layer: 1000, // z-index layer
-                 parentStyles: {}, // extend styles for the parent element
-                 itemStyles: {}, // extend styles for the item element
-                 childrenStyles: {}, // extend styles for the children element(s)
-                 responsive: true, // enabled by default, set to false to disable responsive calculation
-                 debug: false
-             });
+         $('.sticky-element').stickyItem({
+         top: 0,
+         left: 'autoload',
+         originalWidth:'autoload', // sticky item max-width setting, is responsive by default up to max-width
+         background: '#faf7f7', // sticky element background, transparent default
+         stopAt: false, // hide the element when it reaches this position.
+         layer: 1000, // z-index layer
+         parentStyles: {}, // extend styles for the parent element
+         itemStyles: {}, // extend styles for the item element
+         childrenStyles: {}, // extend styles for the children element(s)
+         responsive: true, // enabled by default, set to false to disable responsive calculation
+         debug: false
+         });
          });
          */
         if(this.html() === undefined){
@@ -43,9 +43,7 @@
             debug: false
         }, options );
         var initialTop = settings.top;
-        if(typeof initialTop == 'string'){
-            settings.top = $(initialTop).outerHeight();
-        }
+        calculateTop();
         var sticky = false;
         var visible = true;
         var item = this; // save the loaded item into a variable for later use in functions
@@ -59,6 +57,7 @@
         loadScroll();
         $(window).scroll(function () {
             curTop = $(window).scrollTop(); // update the current scroll position of the page
+            calculateTop();
             checkSizes();
             checkLeft();
             checkTop();
@@ -74,11 +73,25 @@
             loadScroll();
         });
 
+        function calculateTop(){
+            if(typeof initialTop == 'string'){
+                if(initialTop.indexOf(',') !== -1){
+                    settings.top = 0;
+                    var items = initialTop.split(',');
+                    for(var itm in items) {
+                        if($(items[itm]).html()!='undefined') {
+                            settings.top += $(items[itm]).height();
+                        }
+                    }
+                }else {
+                    settings.top = $(itm).height();
+                }
+            }
+        }
+
         function recalculatePosition(){
             if(!settings.responsive){return false;}
-            if(typeof initialTop == 'string'){
-                settings.top = $(initialTop).height();
-            }
+            calculateTop();
             curTop = $(window).scrollTop();
 
             settings.left = 'autoload';
@@ -132,7 +145,12 @@
                 item.parent().animate({'opacity':1},200);
                 visible = true;
             }
-            if ((itemTop-tp) < curTop) {
+            if (itemTop > curTop) {
+                sticky = false;
+                item.parent().removeAttr('style');
+                item.removeAttr('style').removeClass('is-sticky');
+                item.children().removeAttr('style');
+            }else if ((itemTop-tp) < curTop) {
                 sticky = true;
                 item.css($.extend({
                     'background': settings.background,
