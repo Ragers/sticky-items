@@ -65,6 +65,15 @@
         var interval = setInterval(function(){
             sticky = false;
             stickyAt = 0;
+
+            if(settings.parentStyles!=false) {
+                item.parent().removeAttr('style');
+            }
+            item.removeAttr('style').removeClass(settings.customClass);
+            if(settings.childrenStyles!=false) {
+                item.children().removeAttr('style');
+            }
+
             calculateTop();
             flips ++;
             if(flips>=10){
@@ -97,11 +106,11 @@
                     var items = initialTop.split(',');
                     for(var itm in items) {
                         if($(items[itm]).html()!='undefined') {
-                            settings.top += $(items[itm]).height();
+                            settings.top += $(items[itm]).outerHeight();
                         }
                     }
                 }else {
-                    settings.top = $(initialTop).height();
+                    settings.top = $(initialTop).outerHeight();
                 }
             }
         }
@@ -181,19 +190,27 @@
                     'top': settings.top + settings.margin,
                     'z-index': settings.layer
                 }, settings.itemStyles)).addClass(settings.customClass);
-                item.children().css($.extend({
-                    'width': itemWidth,
-                    'margin': 'auto'
-                }, settings.childrenStyles));
-                item.parent().css($.extend({'height': item.outerHeight(), 'width': '100%'}, settings.parentStyles));
+                if(settings.childrenStyles!=false) {
+                    item.children().css($.extend({
+                        'width': itemWidth,
+                        'margin': 'auto'
+                    }, settings.childrenStyles));
+                }
+                if(settings.parentStyles!=false) {
+                    item.parent().css($.extend({'height': item.outerHeight(), 'width': '100%'}, settings.parentStyles));
+                }
             }
 
-            if (lockAt > curTop && sticky) {
+            if ((lockAt > curTop || curTop==0) && sticky) {
                 stickyAt = 0;
                 sticky = false;
-                item.parent().removeAttr('style');
+                if(settings.parentStyles!=false) {
+                    item.parent().removeAttr('style');
+                }
                 item.removeAttr('style').removeClass(settings.customClass);
-                item.children().removeAttr('style');
+                if(settings.childrenStyles!=false) {
+                    item.children().removeAttr('style');
+                }
             }
         }
     }
