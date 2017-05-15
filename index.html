@@ -231,8 +231,19 @@
         background: '#ffffff'
     });
 
-    $('#sticky-heading').stickyItem({
+    $('.jumbotron').stickyItem({
         top:'.header.clearfix',
+        background: '#eeeeee',
+        margin: 15,
+        parentStyles: {
+            'margin-top': '30px',
+            'margin-bottom':'30px'
+        },
+        childrenStyles: false
+    });
+
+    $('#sticky-heading').stickyItem({
+        top:'.header.clearfix,.jumbotron',
         background: '#ffffff'
     }); // nth-children in DOM will always display above its previous element
 
