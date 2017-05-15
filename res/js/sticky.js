@@ -47,6 +47,7 @@
             debug: false
         }, options );
         var initialTop = settings.top;
+        var lastCalculated = 0;
         calculateTop();
         var sticky = false;
         var stickyAt = 0;
@@ -60,6 +61,16 @@
         checkLeft();
         checkTop();
         loadScroll();
+        var flips = 0;
+        var interval = setInterval(function(){
+            sticky = false;
+            stickyAt = 0;
+            calculateTop();
+            flips ++;
+            if(flips>=10){
+                clearInterval(interval);
+            }
+        },250);
         $(window).scroll(function () {
             curTop = $(window).scrollTop(); // update the current scroll position of the page
             calculateTop();
@@ -79,6 +90,7 @@
         });
 
         function calculateTop(){
+            calculatedItems = 0;
             if(typeof initialTop == 'string'){
                 if(initialTop.indexOf(',') !== -1){
                     settings.top = 0;
@@ -89,7 +101,7 @@
                         }
                     }
                 }else {
-                    settings.top = $(itm).height();
+                    settings.top = $(initialTop).height();
                 }
             }
         }
@@ -138,10 +150,11 @@
         }
 
         function loadScroll() {
-            var tp = parseInt(settings.top);
+            var tp = parseInt(settings.top) + parseInt(settings.margin);
+            var lockAt = parseInt(itemTop-tp);
             if(settings.debug) {
-                console.log('%cItem Width: '+itemWidth+', Original Width: '+settings.originalWidth,debugCSS);
-                console.log('%cTo Lock at: '+(itemTop-tp)+', Current Top: '+curTop,debugCSS);
+                // console.log('%cItem Width: '+itemWidth+', Original Width: '+settings.originalWidth,debugCSS);
+                console.log('%cTo Lock at: '+lockAt+ ', Current Top: '+curTop+ ', Item Top: '+itemTop+(sticky?' (locked)':' (not locked)'),debugCSS);
             }
             if(settings.stopAt!=false && curTop>=settings.stopAt && visible){
                 item.parent().animate({'opacity':0},200);
@@ -150,32 +163,32 @@
                 item.parent().animate({'opacity':1},200);
                 visible = true;
             }
-            if (itemTop > curTop) {
-                stickyAt = 0;
+            if(lockAt!=lastCalculated){
                 sticky = false;
-                item.parent().removeAttr('style');
-                item.removeAttr('style').removeClass(settings.customClass);
-                item.children().removeAttr('style');
-            }else if (stickyAt <= curTop || (itemTop-tp) <= curTop) {
+                stickyAt = 0;
+            }
+
+            if (!sticky && stickyAt==0) {
+                lastCalculated = lockAt;
                 sticky = true;
-                if(stickyAt==0) {
-                    stickyAt = (itemTop - tp);
-                }
+                stickyAt = lockAt;
                 item.css($.extend({
                     'background': settings.background,
                     'max-width': '100%',
-                    'width':itemWidth,
+                    'width': itemWidth,
                     'position': 'fixed',
                     'left': settings.left,
                     'top': settings.top + settings.margin,
                     'z-index': settings.layer
-                },settings.itemStyles)).addClass(settings.customClass);
+                }, settings.itemStyles)).addClass(settings.customClass);
                 item.children().css($.extend({
                     'width': itemWidth,
                     'margin': 'auto'
                 }, settings.childrenStyles));
-                item.parent().css($.extend({'height':item.outerHeight(),'width':'100%'},settings.parentStyles));
-            } else {
+                item.parent().css($.extend({'height': item.outerHeight(), 'width': '100%'}, settings.parentStyles));
+            }
+
+            if (lockAt > curTop && sticky) {
                 stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
