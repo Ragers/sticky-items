@@ -154,7 +154,7 @@
                 stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
-                item.removeAttr('style').removeClass(setting.customClass);
+                item.removeAttr('style').removeClass(settings.customClass);
                 item.children().removeAttr('style');
             }else if (stickyAt <= curTop || (itemTop-tp) <= curTop) {
                 sticky = true;
@@ -169,7 +169,7 @@
                     'left': settings.left,
                     'top': settings.top + settings.margin,
                     'z-index': settings.layer
-                },settings.itemStyles)).addClass(setting.customClass);
+                },settings.itemStyles)).addClass(settings.customClass);
                 item.children().css($.extend({
                     'width': itemWidth,
                     'margin': 'auto'
@@ -179,7 +179,7 @@
                 stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
-                item.removeAttr('style').removeClass(setting.customClass);
+                item.removeAttr('style').removeClass(settings.customClass);
                 item.children().removeAttr('style');
             }
         }
