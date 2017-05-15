@@ -13,6 +13,7 @@
          $('.sticky-element').stickyItem({
          top: 0,
          left: 'autoload',
+         margin: 0,
          originalWidth:'autoload', // sticky item max-width setting, is responsive by default up to max-width
          background: '#faf7f7', // sticky element background, transparent default
          stopAt: false, // hide the element when it reaches this position.
@@ -32,6 +33,7 @@
         var settings = $.extend({
             top: 0,
             left: 'autoload',
+            margin: 0,
             background: 'transparent',
             stopAt: false,
             originalWidth: 'autoload',
@@ -45,6 +47,7 @@
         var initialTop = settings.top;
         calculateTop();
         var sticky = false;
+        var stickyAt = 0;
         var visible = true;
         var item = this; // save the loaded item into a variable for later use in functions
         var itemTop = item.offset().top; // get the current position of the item on the page, so that it will only stick to the top from that point down.
@@ -146,19 +149,23 @@
                 visible = true;
             }
             if (itemTop > curTop) {
+                stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
                 item.removeAttr('style').removeClass('is-sticky');
                 item.children().removeAttr('style');
-            }else if ((itemTop-tp) < curTop) {
+            }else if (stickyAt <= curTop || (itemTop-tp) <= curTop) {
                 sticky = true;
+                if(stickyAt==0) {
+                    stickyAt = (itemTop - tp);
+                }
                 item.css($.extend({
                     'background': settings.background,
                     'max-width': '100%',
                     'width':itemWidth,
                     'position': 'fixed',
                     'left': settings.left,
-                    'top': settings.top,
+                    'top': settings.top + settings.margin,
                     'z-index': settings.layer
                 },settings.itemStyles)).addClass('is-sticky');
                 item.children().css($.extend({
@@ -167,6 +174,7 @@
                 }, settings.childrenStyles));
                 item.parent().css($.extend({'height':item.outerHeight(),'width':'100%'},settings.parentStyles));
             } else {
+                stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
                 item.removeAttr('style').removeClass('is-sticky');
