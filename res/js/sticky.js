@@ -10,20 +10,21 @@
 
          @implement method:
          $(document).ready(function(){
-         $('.sticky-element').stickyItem({
-         top: 0,
-         left: 'autoload',
-         margin: 0,
-         originalWidth:'autoload', // sticky item max-width setting, is responsive by default up to max-width
-         background: '#faf7f7', // sticky element background, transparent default
-         stopAt: false, // hide the element when it reaches this position.
-         layer: 1000, // z-index layer
-         parentStyles: {}, // extend styles for the parent element
-         itemStyles: {}, // extend styles for the item element
-         childrenStyles: {}, // extend styles for the children element(s)
-         responsive: true, // enabled by default, set to false to disable responsive calculation
-         debug: false
-         });
+             $('.sticky-element').stickyItem({
+                 top: 0,
+                 left: 'autoload',
+                 margin: 0,
+                 customClass: 'is-sticky',
+                 originalWidth:'autoload', // sticky item max-width setting, is responsive by default up to max-width
+                 background: '#faf7f7', // sticky element background, transparent default
+                 stopAt: false, // hide the element when it reaches this position.
+                 layer: 1000, // z-index layer
+                 parentStyles: {}, // extend styles for the parent element
+                 itemStyles: {}, // extend styles for the item element
+                 childrenStyles: {}, // extend styles for the children element(s)
+                 responsive: true, // enabled by default, set to false to disable responsive calculation
+                 debug: false
+             });
          });
          */
         if(this.html() === undefined){
@@ -34,6 +35,7 @@
             top: 0,
             left: 'autoload',
             margin: 0,
+            customClass: 'is-stick',
             background: 'transparent',
             stopAt: false,
             originalWidth: 'autoload',
@@ -152,7 +154,7 @@
                 stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
-                item.removeAttr('style').removeClass('is-sticky');
+                item.removeAttr('style').removeClass(setting.customClass);
                 item.children().removeAttr('style');
             }else if (stickyAt <= curTop || (itemTop-tp) <= curTop) {
                 sticky = true;
@@ -167,7 +169,7 @@
                     'left': settings.left,
                     'top': settings.top + settings.margin,
                     'z-index': settings.layer
-                },settings.itemStyles)).addClass('is-sticky');
+                },settings.itemStyles)).addClass(setting.customClass);
                 item.children().css($.extend({
                     'width': itemWidth,
                     'margin': 'auto'
@@ -177,7 +179,7 @@
                 stickyAt = 0;
                 sticky = false;
                 item.parent().removeAttr('style');
-                item.removeAttr('style').removeClass('is-sticky');
+                item.removeAttr('style').removeClass(setting.customClass);
                 item.children().removeAttr('style');
             }
         }
