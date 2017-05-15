@@ -227,12 +227,12 @@
 
         a '.is-sticky' class will be added to the pointed element if the element becomes sticky
      */
-    $('#sticky-item').stickyItem({
+    $('.header.clearfix').stickyItem({
         background: '#ffffff'
     });
 
     $('#sticky-heading').stickyItem({
-        top:'#sticky-item',
+        top:'.header.clearfix',
         background: '#ffffff'
     }); // nth-children in DOM will always display above its previous element
 
