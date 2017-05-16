@@ -23,6 +23,7 @@
                  itemStyles: {}, // extend styles for the item element
                  childrenStyles: {}, // extend styles for the children element(s)
                  responsive: true, // enabled by default, set to false to disable responsive calculation
+                 addWrapper: false, // add a class name for the wrapper
                  debug: false
              });
          });
@@ -43,6 +44,7 @@
             parentStyles: {},
             itemStyles: {},
             childrenStyles: {},
+            addWrapper: false,
             responsive: true,
             debug: false
         }, options );
@@ -57,7 +59,11 @@
         var itemWidth = item.outerWidth(); // get the width of the item on initial DOM loaded
         var windowWidth = $(window).outerWidth(); // the current window width
         var curTop = $(window).scrollTop(); // the current scroll position of the page
-        item.wrap('<div></div>');
+        if(settings.addWrapper){
+            item.wrap('<div class="sticky-parent"><div class="'+settings.addWrapper+'"></div></div>');
+        }else {
+            item.wrap('<div class="sticky-parent"></div>');
+        }
         checkLeft();
         checkTop();
         loadScroll();
@@ -124,7 +130,10 @@
             settings.originalWidth = 'autoload';
 
             sticky = false;
-            item.parent().removeAttr('style');
+            if(settings.addWrapper) {
+                item.parent().parent().removeAttr('style').removeClass(settings.customClass);
+            }
+            item.parent().removeAttr('style').removeClass(settings.customClass);
             item.removeAttr('style').removeClass('is-sticky');
             item.children().removeAttr('style');
 
@@ -197,7 +206,25 @@
                     }, settings.childrenStyles));
                 }
                 if(settings.parentStyles!=false) {
-                    item.parent().css($.extend({'height': item.outerHeight(), 'width': '100%'}, settings.parentStyles));
+                    if(settings.addWrapper) {
+                        item.parent().parent().css($.extend({
+                            'height': item.outerHeight(),
+                            'width': '100%'
+                        }, settings.parentStyles)).addClass(settings.customClass);;
+                        item.parent().css($.extend({
+                            'height': item.outerHeight(),
+                            'width':'100%',
+                            'position': 'fixed',
+                            'left': '0',
+                            'top': settings.top + settings.margin,
+                            'z-index': settings.layer
+                        },{}));
+                    }else {
+                        item.parent().css($.extend({
+                            'height': item.outerHeight(),
+                            'width': '100%'
+                        }, settings.parentStyles)).addClass(settings.customClass);;
+                    }
                 }
             }
 
@@ -205,7 +232,10 @@
                 stickyAt = 0;
                 sticky = false;
                 if(settings.parentStyles!=false) {
-                    item.parent().removeAttr('style');
+                    if(settings.addWrapper) {
+                        item.parent().parent().removeAttr('style').removeClass(settings.customClass);
+                    }
+                    item.parent().removeAttr('style').removeClass(settings.customClass);
                 }
                 item.removeAttr('style').removeClass(settings.customClass);
                 if(settings.childrenStyles!=false) {
